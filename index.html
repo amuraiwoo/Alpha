@@ -2,39 +2,54 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>SYSTEM CRITICAL ALERT</title>
+    <title>SECURITY ALERT</title>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; }
-        
-        /* 警告モーダル */
-        #warning-box { border: 3px solid #ff0000; padding: 40px; background: #330000; width: 80%; max-width: 500px; box-shadow: 0 0 20px #ff0000; }
-        h1 { color: #ff0000; text-transform: uppercase; margin: 0; }
-        #timer { font-size: 4em; color: #ffeb3b; margin: 20px 0; }
-        
-        /* 点滅アニメーション */
-        @keyframes strobe {
-            0% { background: #ff0000; } 20% { background: #00ff00; } 40% { background: #0000ff; }
-            60% { background: #ffff00; } 80% { background: #ff00ff; } 100% { background: #00ffff; }
+        body { 
+            margin: 0; background: #000; color: #ff0000; 
+            font-family: 'Arial Black', sans-serif; overflow: hidden; 
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; height: 100vh; text-align: center;
         }
-        .strobe-effect { animation: strobe 0.08s infinite; }
+        #alert-content { width: 95%; }
+        h1 { font-size: 5em; margin: 0; line-height: 1; }
+        .danger { font-size: 3em; color: #fff; margin: 20px 0; }
+        #timer { font-size: 8em; color: #ffff00; font-weight: bold; margin: 20px 0; }
+        
+        /* 騙されたね表示用 */
+        #trick-msg { 
+            display: none; font-size: 10em; color: #fff; text-shadow: 0 0 20px #fff; 
+        }
+
+        .body-flash { animation: strobe 0.5s infinite; }
+        .full-flash { animation: rainbow-flash 0.08s infinite; }
+        
+        @keyframes strobe {
+            0% { background: #550000; } 50% { background: #000; } 100% { background: #550000; }
+        }
+        @keyframes rainbow-flash {
+            0% { background: #f00; } 20% { background: #ff0; } 40% { background: #0f0; }
+            60% { background: #0ff; } 80% { background: #00f; } 100% { background: #f0f; }
+        }
     </style>
 </head>
-<body>
+<body class="body-flash">
 
-    <div id="warning-box">
-        <h1>重大なシステムエラー</h1>
-        <p>ウイルスがルートディレクトリを攻撃しています。<br>全データが消去されるまで：</p>
+    <div id="alert-content">
+        <h1>システム完全崩壊</h1>
+        <div class="danger">ウイルスが全データを暗号化しています</div>
         <div id="timer">01:00</div>
-        <p>※修復プロセスを中断するとSIMカードが永続的にロックされます。</p>
-        <button onclick="triggerFlash()">警告を消去する</button>
+        <div style="font-size: 2em; color: #fff;">今すぐ修復を完了しないと、すべての個人データが永久に消失します。</div>
+        <button onclick="triggerFullPanic()" style="padding: 20px 50px; font-size: 2em; background: #f00; color: #fff; border: none; cursor: pointer; margin-top: 30px;">緊急修復を実行</button>
     </div>
+
+    <div id="trick-msg">騙されたね</div>
 
     <script>
         let time = 60;
         const timerEl = document.getElementById('timer');
-        const box = document.getElementById('warning-box');
+        const content = document.getElementById('alert-content');
+        const trickMsg = document.getElementById('trick-msg');
 
-        // カウントダウン
         const interval = setInterval(() => {
             time--;
             let m = Math.floor(time / 60);
@@ -42,13 +57,14 @@
             timerEl.innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
             if (time <= 0) {
                 clearInterval(interval);
-                triggerFlash();
+                triggerFullPanic();
             }
         }, 1000);
 
-        function triggerFlash() {
-            box.style.display = 'none';
-            document.body.classList.add('strobe-effect');
+        function triggerFullPanic() {
+            content.style.display = 'none';
+            trickMsg.style.display = 'block';
+            document.body.className = 'full-flash';
         }
     </script>
 </body>
