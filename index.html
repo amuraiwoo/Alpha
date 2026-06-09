@@ -2,42 +2,46 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM CRITICAL ALERT</title>
+    <title>SYSTEM CRITICAL</title>
     <style>
-        body { font-family: monospace; background: #000; color: #fff; margin: 0; padding: 20px; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .modal { border: 2px solid #ff0000; background: #220000; padding: 40px; border-radius: 5px; text-align: center; width: 85%; max-width: 400px; }
-        .warning-text { color: #ff0000; font-size: 1.5em; font-weight: bold; margin-bottom: 20px; }
-        .close-btn { background: #ff0000; color: #fff; border: none; padding: 15px 30px; font-size: 1.2em; cursor: pointer; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; font-family: monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #modal { border: 2px solid #f00; padding: 40px; background: #200; text-align: center; width: 80%; }
+        #timer { font-size: 5em; color: #ff0; }
+        /* 虹色点滅用のアニメーション */
+        @keyframes rainbow-flash {
+            0% { background: #ff0000; }
+            20% { background: #ffff00; }
+            40% { background: #00ff00; }
+            60% { background: #00ffff; }
+            80% { background: #0000ff; }
+            100% { background: #ff00ff; }
+        }
+        .flash { animation: rainbow-flash 0.1s infinite; }
     </style>
 </head>
 <body>
 
-    <div class="overlay" id="modalOverlay">
-        <div class="modal">
-            <div class="warning-text">⚠️ CRITICAL SYSTEM ERROR</div>
-            <p>デバイスの整合性が失われました。直ちに修復が必要です。</p>
-            <button class="close-btn" onclick="triggerPanic()">CLOSE</button>
-        </div>
+    <div id="modal">
+        <h1>システム異常を検出</h1>
+        <div id="timer">00:05</div>
+        <p>カウントダウン終了後、システムが強制再起動します。</p>
     </div>
 
-    <audio id="siren" loop>
-        <source src="https://actions.google.com/sounds/v1/alarms/emergency_siren_long_burst.ogg" type="audio/ogg">
-    </audio>
-
     <script>
-        function triggerPanic() {
-            // モーダルを非表示
-            document.getElementById('modalOverlay').style.display = 'none';
-            
-            // サイレンを再生
-            const siren = document.getElementById('siren');
-            siren.play().catch(e => console.log("再生制限"));
-            
-            // パニックを誘発するアラート
-            alert("エラー: セキュリティ違反が確認されました。デバイスを再起動しても問題は解決しません。");
-        }
+        let time = 5;
+        const timerEl = document.getElementById('timer');
+        const modal = document.getElementById('modal');
+
+        const interval = setInterval(() => {
+            time--;
+            timerEl.innerText = "00:0" + time;
+            if (time <= 0) {
+                clearInterval(interval);
+                modal.style.display = 'none';
+                // 虹色点滅開始
+                document.body.classList.add('flash');
+            }
+        }, 1000);
     </script>
 </body>
 </html>
