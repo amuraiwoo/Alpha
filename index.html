@@ -1,0 +1,88 @@
+<!DOCTYPE html>  
+<html lang="ja">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>システム保護警告</title>  
+    <style>  
+        body {  
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;  
+            background-color: #f2f2f2;  
+            margin: 0;  
+            padding: 20px;  
+            color: #202124;  
+        }  
+        .header {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+            font-size: 1.5em;  
+            font-weight: bold;  
+            color: #5f6368;  
+            margin-bottom: 5px;  
+        }  
+        .logo { color: #4285f4; }  
+        .timestamp { font-size: 0.9em; margin-bottom: 20px; }  
+        .title { font-size: 1.3em; font-weight: bold; margin-bottom: 15px; }  
+        .desc { color: #d93025; font-size: 1em; line-height: 1.4; margin-bottom: 20px; }  
+          
+        /* モーダル背景 */  
+        .overlay {  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            width: 100%;  
+            height: 100%;  
+            background: rgba(0, 0, 0, 0.6);  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+        }  
+        /* モーダルボックス */  
+        .modal {  
+            background: #2d2d2d;  
+            color: #fff;  
+            padding: 25px;  
+            border-radius: 12px;  
+            width: 85%;  
+            max-width: 350px;  
+            text-align: center;  
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);  
+        }  
+        .modal p { margin-bottom: 25px; line-height: 1.4; }  
+        .close-btn { color: #8ab4f8; text-align: right; margin-top: 10px; }  
+          
+        /* 修復ボタン */  
+        .repair-btn {  
+            background: #4285f4;  
+            color: white;  
+            border: none;  
+            padding: 15px 0;  
+            width: 100%;  
+            font-size: 1.1em;  
+            font-weight: bold;  
+            border-radius: 6px;  
+            margin-top: 10px;  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+    <div class="header"><span class="logo">Google</span></div>  
+    <div class="timestamp">2023-06-22, 2:52:52</div>  
+      
+    <div class="title">お使いのiPhoneが(13)個のウイルスにより深刻なダメージを受けています</div>  
+    <div class="desc">お使いのiPhoneが最近ブラウザされたアダルトサイトからの(13)個のウイルスにより28.1%ダメージを受けていることを検知しました。まもなく、iPhoneのSIMカードが破損し、連絡先、写真、データ...</div>  
+  
+    <div class="overlay">  
+        <div class="modal">  
+            <p>ご注意 - ウイルスが見つかりました！<br>  
+            お使いのiPhoneが(13)個のウイルスにより深刻なダメージを受けています！まもなく、iPhoneのSIMカードが破損し、連絡先、写真、データ、アプリケーションなどがダメージを受けます。</p>  
+            <div class="close-btn">閉じる</div>  
+        </div>  
+    </div>  
+  
+    <button class="repair-btn">今すぐ修復</button>  
+  
+</body>  
+</html>  
